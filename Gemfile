@@ -1,3 +1,5 @@
+# https://scotch.io/tutorials/build-a-restful-json-api-with-rails-5-part-one
+
 source 'https://rubygems.org'
 
 git_source(:github) do |repo_name|
