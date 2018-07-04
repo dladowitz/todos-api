@@ -48,7 +48,7 @@ RSpec.describe 'Todos API', type: :request do
     end
   end
 
-  describe "POST /todo" do
+  describe "POST /todos" do
     let(:attributes) { { title: "Learn Elm", created_by: 10 } }
     before { post "/todos", params: attributes }
 
@@ -76,16 +76,32 @@ RSpec.describe 'Todos API', type: :request do
     end
   end
 
-  describe "PUT /todo/:id" do
+  describe "PUT /todos/:id" do
     let(:params) { { title: "Go Shopping" } }
     before { put "/todos/#{todo_id}", params: params }
 
     it "updates the title" do
+      expect(Todo.find(todo_id).title).to eq params[:title]
+    end
+
+    it "returns an empty body" do
       expect(response.body).to be_empty
     end
 
     it "returns http code of 204" do
       expect(response).to have_http_status 204
+    end
+  end
+
+  describe "DELETE /todo/:id" do
+    before { delete "/todos/#{todo_id}" }
+
+    it "returns http status 204" do
+      expect(response).to have_http_status 204
+    end
+
+    it "deletes the todo" do
+      expect(Todo.find_by(id: todo_id)).to be_nil
     end
   end
 end
